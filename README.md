@@ -1,5 +1,12 @@
 # Ora! Shin-chan fan website
 
+> **This is the `lite` branch: code only, without the images or the hero video.**
+> To run the full experience, add these files (or use the [`main`](https://github.com/gireeshkumarreddy/Shinchan/tree/main) branch, which has everything):
+>
+> - `assets/hero.mp4` (hero intro video), `assets/hero-poster.jpg`, `assets/hero-end.jpg`
+> - `assets/flowers-poster.jpg`, `assets/shin-peek.png`
+> - `assets/cast/`: `family`, `group`, `actionkamen`, `kazama`, `nene`, `masao`, `bochan`, `shiro`, `himawari`, `principal`, `matsuzaka`, `nanako` (`.webp`)
+
 An interactive fan landing page for Crayon Shin-chan. Shin-chan tears through a bright yellow page, says hi, and then keeps an eye on you: his head and eyes follow your cursor.
 
 Watch the 40-second walkthrough: [`shinchan-showcase.mp4`](shinchan-showcase.mp4)
