@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Showcase stage (full screen)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Gochi+Hand&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+  :root { --paper: #F9DC1C; --cream: #FFFBEA; --ink: #231B15; --red: #D7232A; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+  body { position: relative; font-family: "Zen Maru Gothic", sans-serif; color: var(--ink); }
+
+  /* the website fills the whole frame */
+  #win { position: absolute; inset: 0; overflow: hidden; will-change: transform; z-index: 2; }
+  #site { display: block; width: 1920px; height: 1080px; border: 0; background: var(--paper); }
+
+  /* cursor */
+  #cursor { position: absolute; left: 0; top: 0; z-index: 60; pointer-events: none; opacity: 0; will-change: transform; }
+  #cursor svg { display: block; width: 36px; height: 36px; filter: drop-shadow(2px 3px 0 rgba(35, 27, 21, .35)); transform-origin: 4px 3px; transition: transform .12s; }
+  #cursor.down svg { transform: scale(.82); }
+  .ring { position: absolute; left: 0; top: 0; z-index: 59; width: 66px; height: 66px; margin: -33px 0 0 -33px; border-radius: 50%; border: 4px solid var(--red); pointer-events: none; }
+
+  /* captions */
+  #cap {
+    position: absolute; left: 50%; bottom: 34px; z-index: 50; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px; white-space: nowrap; pointer-events: none;
+    background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; box-shadow: 6px 7px 0 var(--ink);
+    padding: 15px 32px 15px 24px; font-weight: 900; font-size: 34px; line-height: 1; opacity: 0;
+  }
+  #cap i { font-size: 36px; color: var(--red); }
+
+  /* title (sits on the hero's blank paper) and end card */
+  .card { position: absolute; left: 0; right: 0; text-align: center; z-index: 5; pointer-events: none; }
+  #title { top: 330px; }
+  .big { font-family: "Dela Gothic One", sans-serif; font-size: 190px; line-height: 1; color: var(--red); text-shadow: 10px 12px 0 var(--ink); letter-spacing: -.01em; }
+  .sub { margin-top: 30px; font-weight: 900; font-size: 46px; }
+  .hand { font-family: "Gochi Hand", cursive; font-size: 42px; transform: rotate(-3deg); display: inline-block; }
+  #dim { position: absolute; inset: 0; z-index: 4; background: rgba(35, 27, 21, .38); opacity: 0; pointer-events: none; }
+  #outro { top: 190px; opacity: 0; }
+  #outro .panel {
+    display: inline-block; padding: 46px 70px 50px; background: var(--cream);
+    border: 4px solid var(--ink); border-radius: 28px; box-shadow: 14px 16px 0 var(--ink);
+  }
+  #outro .big { font-size: 112px; text-shadow: 7px 8px 0 var(--ink); }
+  #outro .sub { margin-top: 18px; font-size: 38px; }
+  .chips { margin-top: 26px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; max-width: 1100px; }
+  .chip { font-weight: 900; font-size: 24px; background: var(--paper); border: 3px solid var(--ink); border-radius: 999px; padding: 10px 22px; box-shadow: 4px 5px 0 var(--ink); }
+</style>
+</head>
+<body>
+  <div id="win"><iframe id="site" title="Shin-chan fan site"></iframe></div>
+
+  <div class="card" id="title">
+    <p class="hand">a fan website walkthrough</p>
+    <h1 class="big">Shin-chan</h1>
+    <p class="sub">Interactive landing page</p>
+  </div>
+
+  <div id="dim"></div>
+  <div class="card" id="outro">
+    <div class="panel">
+      <h2 class="big">Ora! It's Shin-chan.</h2>
+      <p class="sub">A fan website where every character comes alive</p>
+      <div class="chips"><span class="chip">Paper-tear hero</span><span class="chip">WebGL face rig</span><span class="chip">Flower delivery</span><span class="chip">GSAP motion</span></div>
+    </div>
+  </div>
+
+  <div id="cap"><i class="ph-bold ph-sparkle"></i><span></span></div>
+
+  <div id="cursor"><svg viewBox="0 0 34 34"><path d="M4 3 L4 27 L10.5 21 L15 31 L19.5 29 L15 19.5 L24 19.5 Z" fill="#FFFDF6" stroke="#231B15" stroke-width="2.4" stroke-linejoin="round"/></svg></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(() => {
+  gsap.ticker.lagSmoothing(0);   // never let the timeline drift away from the clock while recording
+  const win = document.getElementById('win'), site = document.getElementById('site');
+  const cursor = document.getElementById('cursor'), cap = document.getElementById('cap');
+  const log = (window.__events = []);
+  const now = () => performance.now() / 1000;
+  let t0 = 0;
+  window.__log = (type, extra) => log.push({ type, t: now() - t0, ...extra });
+
+  /* cursor: drawn by the stage on an exact schedule; real mouse input follows the same path */
+  let cx = -100, cy = -100;
+  const setCursor = (x, y) => { cx = x; cy = y; cursor.style.transform = `translate(${x - 4}px, ${y - 3}px)`; };
+  const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  window.__glide = (x, y, dur) => {
+    const from = { x: cx, y: cy }, p = { u: 0 };
+    return gsap.to(p, {
+      u: 1, duration: dur, ease: 'none',
+      onUpdate() {
+        const k = easeIO(p.u), bend = Math.sin(Math.PI * p.u) * 40;
+        setCursor(from.x + (x - from.x) * k + bend * 0.3, from.y + (y - from.y) * k - bend * 0.2);
+      },
+    });
+  };
+  function ripple() {
+    const r = document.createElement('div');
+    r.className = 'ring';
+    r.style.left = `${cx}px`; r.style.top = `${cy}px`;
+    document.body.appendChild(r);
+    gsap.fromTo(r, { scale: 0.2, opacity: 1 }, { scale: 1.25, opacity: 0, duration: 0.5, ease: 'power2.out', onComplete: () => r.remove() });
+  }
+  const down = () => { cursor.classList.add('down'); ripple(); window.__log('down'); };
+  const up = () => { cursor.classList.remove('down'); window.__log('up'); };
+  addEventListener('mousedown', down); addEventListener('mouseup', up);
+  window.__frameMouse = (type) => { if (type === 'down') down(); else if (type === 'up') up(); };
+
+  /* stage <-> site geometry */
+  const doc = () => site.contentDocument, sw = () => site.contentWindow;
+  window.__point = (sel, fx = 0.5, fy = 0.5, dx = 0, dy = 0) => {
+    const el = doc().querySelector(sel);
+    if (!el) return null;
+    const e = el.getBoundingClientRect(), r = site.getBoundingClientRect(), k = r.width / site.clientWidth;
+    return { x: r.left + (e.left + e.width * fx) * k + dx, y: r.top + (e.top + e.height * fy) * k + dy };
+  };
+
+  /* scrolling the site */
+  const scrollProxy = { y: 0 };
+  function scrollTo(target, duration, ease = 'power2.inOut') {
+    return gsap.fromTo(scrollProxy, { y: () => sw().scrollY }, {
+      y: target, duration, ease, immediateRender: false,
+      onUpdate() { sw().scrollTo({ top: scrollProxy.y, behavior: 'instant' }); },
+    });
+  }
+  const topOf = (sel, offset = 0) => () => doc().querySelector(sel).getBoundingClientRect().top + sw().scrollY - offset;
+  const bottomOf = (sel, margin = 0) => () => {
+    const r = doc().querySelector(sel).getBoundingClientRect();
+    return r.bottom + sw().scrollY - (site.clientHeight - margin);
+  };
+  const centerOf = (sel, bias = 0) => () => {
+    const r = doc().querySelector(sel).getBoundingClientRect();
+    return r.top + r.height / 2 + sw().scrollY - site.clientHeight / 2 + bias;
+  };
+  const pageEnd = () => sw().document.documentElement.scrollHeight - site.clientHeight;
+
+  /* captions */
+  function say(text, icon = 'sparkle') {
+    return gsap.timeline()
+      .to(cap, { opacity: 0, y: 14, scale: 0.92, duration: 0.16, ease: 'power2.in' })
+      .call(() => { cap.querySelector('span').textContent = text; cap.querySelector('i').className = `ph-bold ph-${icon}`; window.__log('caption'); })
+      .fromTo(cap, { y: 24, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: 'back.out(2.4)' });
+  }
+  const hush = () => gsap.to(cap, { opacity: 0, y: 14, duration: 0.25 });
+
+  /* camera push-in around an element of the site */
+  function zoom(sel, scale, duration, fx = 0.5, fy = 0.5) {
+    return gsap.to(win, {
+      scale, duration, ease: 'power3.inOut',
+      onStart() {
+        const p = window.__point(sel, fx, fy);
+        if (p && scale !== 1) gsap.set(win, { transformOrigin: `${p.x}px ${p.y}px` });
+      },
+    });
+  }
+
+  /* the master timeline (seconds of video time) */
+  window.__build = () => {
+    // recording-only tidy-up inside the site: no "Skip intro" button
+    const st = doc().createElement('style');
+    st.textContent = '.hero__skip{display:none!important}';
+    doc().head.appendChild(st);
+
+    const tl = gsap.timeline({ paused: true });
+    tl.from('#title > *', { y: 60, opacity: 0, duration: 0.55, stagger: 0.1, ease: 'back.out(2)' }, 0.05)
+      .to('#title', { y: -230, opacity: 0, duration: 0.6, ease: 'power3.in' }, 1.15)
+      .call(() => window.__log('whoosh'), null, 1.1)
+      .call(() => window.__heroGo(), null, 1.45)
+      .add(say('He tears through the page...', 'scissors'), 2.6)
+      .add(say('...and says hi!', 'hand-waving'), 6.9)
+      .add(say('Move your cursor. He follows.', 'cursor-click'), 9.7)
+      .add(zoom('#poke', 1.38, 1.1, 0.5, 0.45), 9.75)
+      .add(zoom('#poke', 1, 0.8), 12.15)
+      .add(scrollTo(bottomOf('#familyPortrait', 125), 1.0), 12.9)
+      .add(say('Every family member has a move', 'users-three'), 13.3)
+      .add(scrollTo(topOf('.bento', 110), 0.9), 17.2)
+      .add(say('Point at a kid. Poke their card.', 'hand-pointing'), 17.5)
+      .add(scrollTo(topOf('#action', -10), 0.9), 20.6)
+      .add(say('Hold to charge the Action Beam', 'lightning'), 20.9)
+      .add(scrollTo(topOf('.polaroids', 190), 0.85), 24.3)
+      .add(say("Flip the grown-ups' polaroids", 'images'), 24.6)
+      .add(scrollTo(centerOf('#flowers .wrap', 42), 1.3, 'power2.inOut'), 26.4)
+      .add(zoom('#flowers .wrap', 1.26, 1.0, 0.5, 0.5), 27.75)
+      .add(say('Send flowers to anyone you like', 'flower-tulip'), 27.4)
+      .add(say('...and take them yourself', 'hand-heart'), 31.5)
+      .add(hush(), 36.75)
+      .add(zoom('#flowers .wrap', 1, 0.6), 36.5)
+      .add(scrollTo(pageEnd, 0.8, 'power2.inOut'), 37.0)
+      .call(() => window.__log('whoosh'), null, 37.0)
+      .to('#dim', { opacity: 1, duration: 0.5 }, 38.45)
+      .to('#outro', { opacity: 1, duration: 0.01 }, 38.5)
+      .from('#outro .panel', { y: 70, scale: 0.85, rotation: -3, opacity: 0, duration: 0.6, ease: 'back.out(2)' }, 38.5)
+      .from('#outro .panel > *', { y: 30, opacity: 0, duration: 0.45, stagger: 0.08, ease: 'back.out(2)' }, 38.65)
+      .call(() => window.__log('outro'), null, 38.5)
+      .to(cursor, { opacity: 0, duration: 0.3 }, 38.5);
+    window.__tl = tl;
+  };
+  window.__start = () => { t0 = now(); window.__tl.play(0); };
+  window.__showCursor = (x, y) => { setCursor(x, y); gsap.to(cursor, { opacity: 1, duration: 0.3 }); };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Shin-chan | Ora! Hello from Kasukabe</title>
+  <meta name="description" content="A fan-made tribute to Crayon Shin-chan. Meet Shin-chan, the Nohara family, the Kasukabe Defense Force, Action Kamen and the grown-ups of Kasukabe.">
+  <meta name="theme-color" content="#F9DC1C">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F9DC1C' stroke='%23231B15' stroke-width='4'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='34' text-anchor='middle' fill='%23D7232A'%3ES%3C/text%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Gochi+Hand&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="Shin-chan, back to top">
+        <span class="brand__word">Shin-chan</span>
+        <span class="brand__jp" aria-hidden="true">しんちゃん</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#family">Family</a>
+        <a href="#friends">Friends</a>
+        <a href="#action">Action Kamen</a>
+        <a href="#grownups">Grown-ups</a>
+        <a href="#flowers">Flowers</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="icon-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Turn sound on">
+          <i class="ph-bold ph-speaker-simple-slash" aria-hidden="true"></i>
+        </button>
+        <a class="btn btn--primary btn--sm nav__cta" href="#join">Join the club</a>
+        <button class="icon-btn nav__menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+          <i class="ph-bold ph-list" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <nav aria-label="Mobile">
+      <a href="#family">Family</a>
+      <a href="#friends">Friends</a>
+      <a href="#action">Action Kamen</a>
+      <a href="#grownups">Grown-ups</a>
+      <a href="#rules">Rules</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#flowers">Flowers</a>
+      <a class="btn btn--primary" href="#join">Join the club</a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <!-- HERO: Shin-chan tears through the page, says hi, then keeps an eye on you -->
+    <section class="hero" id="top" aria-label="Shin-chan says hi">
+      <div class="hero__world" id="world">
+        <div class="hero__stage" id="stage" aria-hidden="true">
+          <video id="heroVideo" src="assets/hero.mp4" poster="assets/hero-poster.jpg" muted playsinline preload="auto"></video>
+          <canvas class="rig" id="heroRig"></canvas>
+        </div>
+        <button class="hero__poke" id="poke" type="button" aria-label="Poke Shin-chan so he says hi again"></button>
+        <p class="hero__note" id="note" aria-hidden="true">psst... something is moving behind this page</p>
+        <p class="hero__hint" id="hint" aria-hidden="true">
+          <i class="ph-bold ph-arrow-bend-left-up" aria-hidden="true"></i>
+          <span class="hint--fine">move your cursor, he follows</span>
+          <span class="hint--touch">drag your finger, he follows</span>
+        </p>
+      </div>
+
+      <div class="hero__copy" id="heroCopy">
+        <p class="hero__eyebrow">Kasukabe's most famous 5-year-old</p>
+        <h1 class="hero__title">
+          <span class="line"><span class="line__inner">Ora! It's</span></span>
+          <span class="line"><span class="line__inner hero__name">Shin-chan.</span></span>
+        </h1>
+        <p class="hero__sub">Mischief maker, Chocobi fan and Action Kamen's loudest supporter. He just tore through the page to say hi.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#family">Meet the family</a>
+          <button class="btn btn--ghost" id="replayBtn" type="button">
+            <i class="ph-bold ph-hand-waving" aria-hidden="true"></i>Say hi again
+          </button>
+        </div>
+      </div>
+
+      <button class="hero__skip" id="skipBtn" type="button">Skip intro</button>
+    </section>
+
+    <!-- BAND -->
+    <div class="band" aria-hidden="true">
+      <div class="band__track" id="bandTrack">
+        <span>Ora!</span><i class="ph-bold ph-star-four"></i>
+        <span>Chocobi</span><i class="ph-bold ph-star-four"></i>
+        <span>Action Kamen</span><i class="ph-bold ph-star-four"></i>
+        <span>Kasukabe</span><i class="ph-bold ph-star-four"></i>
+        <span>Buriburizaemon</span><i class="ph-bold ph-star-four"></i>
+        <span>Futaba Kindergarten</span><i class="ph-bold ph-star-four"></i>
+        <span>Wahahaha!</span><i class="ph-bold ph-star-four"></i>
+      </div>
+    </div>
+
+    <!-- FAMILY: explorable portrait -->
+    <section class="family" id="family" aria-labelledby="family-title">
+      <div class="wrap family__grid">
+        <div class="family__head">
+          <h2 class="h2" id="family-title" data-reveal>The Nohara family</h2>
+          <p class="lede" data-reveal>Pick anyone in the portrait. Every one of them has a signature move.</p>
+        </div>
+
+        <figure class="explore explore--portrait" id="familyPortrait" data-cast="family">
+          <img src="assets/cast/family.webp" width="736" height="736" alt="The Nohara family: Hiroshi, Misae, Shin-chan, baby Himawari and Shiro the dog" draggable="false">
+          <span class="explore__dim" aria-hidden="true"></span>
+          <span class="explore__spots"></span>
+          <span class="fx" aria-hidden="true"></span>
+        </figure>
+
+        <div class="member" id="member">
+          <div class="member__tabs" role="group" aria-label="Choose a family member"></div>
+          <article class="member__card" id="memberCard" aria-live="polite">
+            <span class="member__jp" aria-hidden="true"></span>
+            <h3 class="member__name"></h3>
+            <p class="member__role"><span class="member__roleText"></span><span class="member__tag"></span></p>
+            <p class="member__bio"></p>
+            <button class="btn btn--primary member__move" type="button"><i class="ph-bold ph-sparkle" aria-hidden="true"></i><span></span></button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRIENDS: group photo linked to each member card -->
+    <section class="friends torn" id="friends" aria-labelledby="friends-title">
+      <div class="wrap">
+        <h2 class="h2" id="friends-title" data-reveal>The Kasukabe Defense Force</h2>
+        <p class="lede" data-reveal>Point at a kid in the photo, or poke their card. Each one reacts in their own way.</p>
+        <div class="bento">
+          <div class="cell cell--group" data-cell>
+            <figure class="explore explore--photo" id="groupPhoto" data-cast="group">
+              <img src="assets/cast/group.webp" width="735" height="490" alt="Kazama, Masao, Shin-chan, Shiro, Bo-chan and Nene standing in a row" draggable="false">
+              <span class="explore__dim" aria-hidden="true"></span>
+              <span class="explore__spots"></span>
+              <span class="fx" aria-hidden="true"></span>
+            </figure>
+            <div class="group__cap">
+              <p class="motto__big">Fearless.<sup>*</sup></p>
+              <p class="motto__foot">*Until somebody's mom shows up.</p>
+            </div>
+          </div>
+          <article class="cell cell--kazama" data-cell data-friend="kazama">
+            <button class="cell__art" type="button" aria-label="Poke Kazama"><img src="assets/cast/kazama.webp" width="340" height="420" alt="" draggable="false"></button>
+            <span class="fx" aria-hidden="true"></span>
+            <h3>Toru Kazama</h3>
+            <p class="cell__role">The serious one</p>
+            <p>Cram school, English lessons and big plans to be elite. Gets dragged into chaos anyway.</p>
+          </article>
+          <article class="cell cell--nene" data-cell data-friend="nene">
+            <button class="cell__art" type="button" aria-label="Poke Nene"><span class="cast-fig" data-cast="nene"><img src="assets/cast/nene.webp" width="621" height="760" alt="" draggable="false"></span></button>
+            <span class="fx" aria-hidden="true"></span>
+            <h3>Nene Sakurada</h3>
+            <p class="cell__role">The director</p>
+            <p>Runs very strict games of house. When things go wrong, her stuffed bunny takes the punches.</p>
+          </article>
+          <article class="cell cell--masao" data-cell data-friend="masao">
+            <button class="cell__art" type="button" aria-label="Poke Masao"><img src="assets/cast/masao.webp" width="340" height="420" alt="" draggable="false"></button>
+            <span class="fx" aria-hidden="true"></span>
+            <h3>Masao Sato</h3>
+            <p class="cell__role">The crybaby</p>
+            <p>Rice ball head, big heart, bigger tears. Dreams of drawing his own manga one day.</p>
+          </article>
+          <article class="cell cell--bo" data-cell data-friend="bochan">
+            <button class="cell__art" type="button" aria-label="Give Bo-chan a rock"><img src="assets/cast/bochan.webp" width="340" height="420" alt="" draggable="false"></button>
+            <span class="fx" aria-hidden="true"></span>
+            <h3>Bo-chan</h3>
+            <p class="cell__role">The quiet one</p>
+            <p>Says very little and collects interesting rocks. <span class="rocks" aria-live="polite">Rocks so far: <strong>0</strong></span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTION KAMEN -->
+    <section class="action" id="action" aria-labelledby="action-title">
+      <div class="wrap action__grid">
+        <div class="action__copy">
+          <p class="eyebrow">Shin-chan's hero</p>
+          <h2 class="h2" id="action-title" data-reveal>Action Kamen</h2>
+          <p class="lede" data-reveal>Shin-chan's favorite TV superhero. Never loses, never stops laughing, and his Action Beam fixes just about everything.</p>
+          <div class="action__controls">
+            <button class="btn btn--primary btn--beam" id="beamBtn" type="button">
+              <span class="beam-meter" aria-hidden="true"></span>
+              <i class="ph-bold ph-lightning" aria-hidden="true"></i><span class="beam-label">Hold to charge the beam</span>
+            </button>
+            <p class="action__count" aria-live="polite">Beams fired: <strong id="beamCount">0</strong></p>
+          </div>
+        </div>
+        <figure class="action__art" id="akArt">
+          <span class="cast-fig" data-cast="actionkamen">
+            <img src="assets/cast/actionkamen.webp" width="590" height="688" alt="Action Kamen striking his pose next to Shin-chan, who copies him" draggable="false">
+            <span class="ak-charge" aria-hidden="true"></span>
+            <span class="ak-beam" aria-hidden="true"></span>
+          </span>
+          <span class="fx" aria-hidden="true"></span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- GROWN-UPS -->
+    <section class="grown torn" id="grownups" aria-labelledby="grown-title">
+      <div class="wrap">
+        <h2 class="h2" id="grown-title" data-reveal>The grown-ups of Kasukabe</h2>
+        <p class="lede" data-reveal>Flip a photo to read what Shin-chan really thinks of them.</p>
+      </div>
+      <div class="polaroids">
+        <button class="polaroid" type="button" aria-pressed="false" data-fx="exclaim" data-tilt="-4">
+          <span class="polaroid__inner">
+            <span class="polaroid__face polaroid__front">
+              <span class="polaroid__photo polaroid__photo--cut"><img src="assets/cast/principal.webp" width="517" height="760" alt="Principal Bunta Takakura in his checked suit" draggable="false"></span>
+              <span class="polaroid__cap">Principal Takakura</span>
+            </span>
+            <span class="polaroid__face polaroid__back">
+              <span class="polaroid__note">Looks like a gang boss. Is actually the kindest man in Kasukabe. Still scary though.</span>
+              <span class="polaroid__sig">by Shin-chan</span>
+            </span>
+          </span>
+          <span class="fx" aria-hidden="true"></span>
+        </button>
+        <button class="polaroid" type="button" aria-pressed="false" data-fx="rose" data-tilt="3">
+          <span class="polaroid__inner">
+            <span class="polaroid__face polaroid__front">
+              <span class="polaroid__photo"><img src="assets/cast/matsuzaka.webp" width="640" height="638" alt="Matsuzaka-sensei with her hand on her hip" draggable="false"></span>
+              <span class="polaroid__cap">Matsuzaka-sensei</span>
+            </span>
+            <span class="polaroid__face polaroid__back">
+              <span class="polaroid__note">Teaches the Rose class and is always hunting for true love. Never, ever ask her age.</span>
+              <span class="polaroid__sig">by Shin-chan</span>
+            </span>
+          </span>
+          <span class="fx" aria-hidden="true"></span>
+        </button>
+        <button class="polaroid" type="button" aria-pressed="false" data-fx="hearts" data-tilt="-2">
+          <span class="polaroid__inner">
+            <span class="polaroid__face polaroid__front">
+              <span class="polaroid__photo"><span class="cast-fig" data-cast="nanako"><img src="assets/cast/nanako.webp" width="499" height="760" alt="Nanako, the college student, in a yellow top" draggable="false"></span></span>
+              <span class="polaroid__cap">Nanako-oneesan</span>
+            </span>
+            <span class="polaroid__face polaroid__back">
+              <span class="polaroid__note">The prettiest college student in Kasukabe. I'm going to marry her. She doesn't know yet.</span>
+              <span class="polaroid__sig">by Shin-chan</span>
+            </span>
+          </span>
+          <span class="fx" aria-hidden="true"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- RULES -->
+    <section class="rules" id="rules" aria-labelledby="rules-title">
+      <div class="wrap">
+        <h2 class="h2" id="rules-title" data-reveal>Shin-chan's rules for living</h2>
+        <p class="lede" data-reveal><span class="drag-fine">Drag the notes around. He would want you to make a mess.</span><span class="drag-touch">Six rules he lives by, every single day.</span></p>
+      </div>
+      <div class="board" id="board">
+        <article class="note note--paper" style="--x:4%;--y:28px" data-rot="-6"><p>Chocobi comes first. Always.</p></article>
+        <article class="note note--cream" style="--x:27%;--y:96px" data-rot="4"><p>Green peppers are the enemy.</p></article>
+        <article class="note note--red" style="--x:51%;--y:12px" data-rot="-3"><p>Action Kamen never loses. Wahahaha!</p></article>
+        <article class="note note--skin" style="--x:75%;--y:70px" data-rot="5"><p>Ask every pretty lady if she puts green onions in her natto.</p></article>
+        <article class="note note--cream" style="--x:14%;--y:330px" data-rot="3"><p>When in doubt, do the butt dance.</p></article>
+        <article class="note note--paper" style="--x:58%;--y:320px" data-rot="-4"><p>Buriburizaemon will save you. For a small fee.</p></article>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline torn" id="timeline" aria-labelledby="timeline-title">
+      <div class="timeline__pin">
+        <div class="wrap timeline__head">
+          <p class="eyebrow">Since 1990</p>
+          <h2 class="h2" id="timeline-title">Still five after all these years</h2>
+        </div>
+        <div class="timeline__rail">
+          <div class="timeline__track" id="track">
+            <span class="timeline__line" aria-hidden="true"><span id="trackLine"></span></span>
+            <article class="era">
+              <span class="era__year">1990</span>
+              <h3>A comic is born</h3>
+              <p>Shin-chan first appears in Weekly Manga Action, drawn by Yoshito Usui.</p>
+            </article>
+            <article class="era">
+              <span class="era__year">1992</span>
+              <h3>On TV</h3>
+              <p>The anime premieres on TV Asahi. Kasukabe has not been quiet since.</p>
+            </article>
+            <article class="era">
+              <span class="era__year">1993</span>
+              <h3>Big screen</h3>
+              <p>The first movie arrives: Action Kamen vs. Leotard Devil. A yearly tradition begins.</p>
+            </article>
+            <article class="era">
+              <span class="era__year">2010</span>
+              <h3>New chapters</h3>
+              <p>The manga continues as New Crayon Shin-chan, carried on by Usui's team.</p>
+            </article>
+            <article class="era era--now">
+              <span class="era__year">Today</span>
+              <h3>Still five</h3>
+              <p>Over 1,000 episodes and more than 30 movies later, he still hasn't finished kindergarten.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLOWERS: interactive flower delivery -->
+    <section class="flowers torn" id="flowers" aria-labelledby="flowers-title">
+      <div class="wrap">
+        <h2 class="h2" id="flowers-title" data-reveal>Shin-chan's flower delivery</h2>
+        <p class="lede" data-reveal>Tell him who deserves flowers today. He'll bring them over (a little shy), and you get a link to send the moment to them.</p>
+        <div class="flowers__grid">
+          <figure class="flowers__stage" id="flowerStage">
+            <div class="flowers__screen">
+              <video id="flowerVideo" src="assets/flowers.mp4" poster="assets/flowers-poster.jpg" muted playsinline preload="metadata" aria-label="Shin-chan walks over with a bouquet of flowers"></video>
+            </div>
+            <p class="flowers__tag" id="flowerTag" aria-hidden="true">Special delivery for <strong></strong></p>
+            <p class="flowers__stamp" id="flowerStamp" aria-hidden="true">Delivered!</p>
+            <p class="flowers__bubble" id="flowerBubble" aria-hidden="true"></p>
+            <button class="flowers__take" id="flowerTake" type="button" hidden><span>Take the flowers</span></button>
+            <span class="fx" aria-hidden="true"></span>
+          </figure>
+
+          <div class="flowers__panel">
+            <form class="flowers__form" id="flowerForm" novalidate>
+              <label for="flowerName">Who are these for?</label>
+              <input id="flowerName" name="flowerName" type="text" maxlength="24" autocomplete="off" placeholder="Mom" aria-describedby="flowerStatus">
+              <div class="flowers__chips" role="group" aria-label="Quick picks">
+                <button type="button" class="chip-btn" data-name="Mom">Mom</button>
+                <button type="button" class="chip-btn" data-name="Nanako-oneesan">Nanako-oneesan</button>
+                <button type="button" class="chip-btn" data-name="My best friend">My best friend</button>
+                <button type="button" class="chip-btn" data-name="My teacher">My teacher</button>
+              </div>
+              <button class="btn btn--primary flowers__go" type="submit"><i class="ph-bold ph-flower-lotus" aria-hidden="true"></i>Deliver the flowers</button>
+              <p class="flowers__status" id="flowerStatus" role="status" aria-live="polite">He's waiting for a name.</p>
+            </form>
+
+            <div class="flowers__done" id="flowerDone" hidden>
+              <p class="flowers__doneTitle">Delivered to <span id="flowerDoneName"></span>!</p>
+              <p class="flowers__doneText">Send them the moment. The link opens this page and plays the delivery with their name on it.</p>
+              <div class="flowers__share">
+                <input id="flowerLink" type="text" readonly aria-label="Delivery link">
+                <button class="btn btn--primary" id="flowerCopy" type="button"><i class="ph-bold ph-link" aria-hidden="true"></i><span>Copy link</span></button>
+              </div>
+              <button class="btn btn--ghost" id="flowerAgain" type="button"><i class="ph-bold ph-arrow-counter-clockwise" aria-hidden="true"></i>Send another</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN -->
+    <section class="join" id="join" aria-labelledby="join-title">
+      <div class="join__wrap">
+        <canvas class="peek" id="peekRig" aria-hidden="true"></canvas>
+        <div class="join__card">
+          <h2 class="h2" id="join-title">Join the Kasukabe Defense Force</h2>
+          <p class="lede">Episode picks, movie news and fan art. One email a month, zero homework.</p>
+          <form class="join__form" id="joinForm" novalidate>
+            <label for="email">Your email</label>
+            <div class="field">
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="formMsg">
+              <button class="btn btn--primary" type="submit">Join the club</button>
+            </div>
+            <p class="field__msg" id="formMsg" role="status" aria-live="polite">We'll never share your email. Not even with Buriburizaemon.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="flowerToast" hidden>
+    <i class="ph-bold ph-flower-tulip" aria-hidden="true"></i>
+    <span>Someone sent you flowers!</span>
+    <button class="btn btn--primary btn--sm" id="flowerToastBtn" type="button">See them</button>
+  </div>
+
+  <footer class="footer torn">
+    <button class="footer__shiro" id="footerShiro" type="button" aria-label="Pet Shiro">
+      <img src="assets/cast/shiro.webp" width="206" height="206" alt="" draggable="false">
+      <span class="fx" aria-hidden="true"></span>
+    </button>
+    <div class="wrap footer__inner">
+      <div>
+        <p class="footer__bye">Bye-bye!</p>
+        <p class="footer__note">A fan-made tribute. Crayon Shin-chan &copy; Yoshito Usui / Futabasha, Shin-Ei Animation and TV Asahi. This site is not affiliated with them.</p>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#family">Family</a>
+        <a href="#friends">Friends</a>
+        <a href="#action">Action Kamen</a>
+        <a href="#grownups">Grown-ups</a>
+        <a href="#rules">Rules</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#flowers">Flowers</a>
+        <a href="#join">Join the club</a>
+        <a href="#top" class="footer__top"><i class="ph-bold ph-arrow-up" aria-hidden="true"></i>Back to top</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+  <script src="js/rig-data.js"></script>
+  <script src="js/rig.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cast-data.js"></script>
+  <script src="js/cast.js"></script>
+  <script src="js/flowers.js"></script>
+</body>
+</html>

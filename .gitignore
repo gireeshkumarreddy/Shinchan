@@ -1,0 +1,9 @@
+node_modules/
+.claude/
+video-tools/frames/
+video-tools/*.wav
+video-tools/showcase-silent.mp4
+video-tools/frames.txt
+video-tools/events.json
+.DS_Store
+Thumbs.db
